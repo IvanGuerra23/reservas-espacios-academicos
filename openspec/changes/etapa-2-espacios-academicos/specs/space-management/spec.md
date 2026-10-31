@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Permite administrar el catálogo de espacios académicos —laboratorios, auditorios y salas de cómputo— y consultarlo, aplicando la política de permisos de la Etapa 1.
+Permite administrar el catálogo de espacios académicos —laboratorios, auditorios y salas de cómputo— incluida su desactivación y reactivación, y consultarlo aplicando la política de permisos de la Etapa 1.
 
 ## ADDED Requirements
 
@@ -81,6 +81,10 @@ El sistema SHALL permitir al Administrador desactivar un espacio existente. La d
 - **WHEN** un Administrador autenticado desactiva un espacio existente
 - **THEN** el sistema responde 200, conserva el registro y devuelve `activo` en falso
 
+#### Scenario: Desactivación de un espacio ya inactivo
+- **WHEN** un Administrador autenticado desactiva un espacio que ya está inactivo
+- **THEN** el sistema responde 200 sin cambios y conserva el registro
+
 #### Scenario: Desactivación de un espacio inexistente
 - **WHEN** un Administrador autenticado intenta desactivar un identificador que no corresponde a ningún espacio
 - **THEN** el sistema responde 404
@@ -91,4 +95,27 @@ El sistema SHALL permitir al Administrador desactivar un espacio existente. La d
 
 #### Scenario: Desactivación sin autenticación
 - **WHEN** se intenta desactivar un espacio sin token
+- **THEN** el sistema responde 401 y no modifica el espacio
+
+### Requirement: Reactivar espacio académico
+El sistema SHALL permitir al Administrador reactivar un espacio existente. La reactivación SHALL cambiar el estado a activo y SHALL no eliminar el registro. Reactivar un espacio ya activo SHALL responder 200 sin cambios. Los roles Solicitante y Coordinador SHALL recibir 403 y las peticiones sin token 401.
+
+#### Scenario: Reactivación exitosa
+- **WHEN** un Administrador autenticado reactiva un espacio inactivo
+- **THEN** el sistema responde 200, conserva el registro y devuelve `activo` en verdadero
+
+#### Scenario: Reactivación de un espacio ya activo
+- **WHEN** un Administrador autenticado reactiva un espacio que ya está activo
+- **THEN** el sistema responde 200 sin cambios y conserva el registro
+
+#### Scenario: Reactivación de un espacio inexistente
+- **WHEN** un Administrador autenticado intenta reactivar un identificador que no corresponde a ningún espacio
+- **THEN** el sistema responde 404
+
+#### Scenario: Reactivación con rol no autorizado
+- **WHEN** un usuario autenticado con rol Solicitante o Coordinador intenta reactivar un espacio
+- **THEN** el sistema responde 403 y no modifica el espacio
+
+#### Scenario: Reactivación sin autenticación
+- **WHEN** se intenta reactivar un espacio sin token
 - **THEN** el sistema responde 401 y no modifica el espacio
