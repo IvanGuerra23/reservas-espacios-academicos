@@ -1,32 +1,23 @@
 schema: spec-driven
 
-# Project context (optional)
-# Add only constraints that should guide OpenSpec artifacts and workflows.
-# Include constraints an agent cannot infer by reading the code.
-# Keep general project documentation and discoverable codebase facts out.
-# Example:
-#   context: |
-#     Designs and tasks must cover Windows, macOS, and Linux
-#     Write all artifacts in Spanish
+context: |
+  Proyecto académico: API REST de gestión de reservas de espacios académicos.
+  Fuente de verdad: PLAN_INGENIERIA.md en la raíz. No contradecirlo.
+  Stack: Python, FastAPI, SQLAlchemy, PostgreSQL (Docker Compose), JWT, pytest.
+  Arquitectura: monolito modular en capas (rutas, servicios, acceso a datos).
+  Las reglas de negocio viven en la capa de servicios.
+  Módulos: usuarios y autenticación, espacios, reservas, aprobaciones.
+  Roles: Solicitante, Coordinador, Administrador.
+  Estados de reserva: pendiente, aprobada, rechazada, cancelada.
+  Solo pendiente y aprobada bloquean el horario.
+  Fuera de alcance: interfaz gráfica, notificaciones, reservas recurrentes.
+  Idioma: redacta en español y conserva en inglés las palabras clave
+  de OpenSpec (SHALL, WHEN, THEN).
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always state what is out of scope
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
-
-# Per-operation guidance (optional)
-# Add advisory guidance for how apply and archive work should be conducted.
-# This is separate from artifact rules above.
-# Example:
-#   operations:
-#     apply:
-#       guidance:
-#         - Keep test summaries concise
-#     archive:
-#       guidance:
-#         - Summarize the archive outcome before finishing
+rules:
+  specs:
+    - Cada requisito debe tener al menos un escenario verificable.
+    - No inventes reglas ni funciones que no estén en PLAN_INGENIERIA.md;
+      si algo es ambiguo, anótalo como pregunta abierta.
+  tasks:
+    - Cada tarea debe indicar qué prueba automatizada la verifica.
